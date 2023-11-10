@@ -1,3 +1,7 @@
+/**
+ * Problem: https://leetcode.com/problems/find-the-town-judge/
+ */
+
 function findJudge(n: number, trust: number[][]): number {
   if (trust.length === 0 && n === 1) return 1;
 
