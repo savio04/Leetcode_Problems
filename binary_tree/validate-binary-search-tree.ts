@@ -15,45 +15,45 @@ function isValidBST(root: TreeNode | null): boolean {
     origin: "left" | "right" | null;
   }> = root ? [{ node: root, origin: null }] : [];
 
-  let lastMin = 0; 
-  let lastMax = 0;
+  // let lastMin = 0; 
+  // let lastMax = 0;
 
-  while (stack.length) {
-    const { node, origin } = stack.pop()!;
+  // while (stack.length) {
+  //   const { node, origin } = stack.pop()!;
 
-    if (origin === "left") {
-      if (node?.val! >= lastMin) {
-        return false;
-      } else {
-        lastMin = node?.val!;
-      }
-    }
+  //   if (origin === "left") {
+  //     if (node?.val! >= lastMin) {
+  //       return false;
+  //     } else {
+  //       lastMin = node?.val!;
+  //     }
+  //   }
 
-    if (origin === "right") {
-      if (node?.val! <= lastMax) {
-        return false;
-      } else {
-        lastMax = node?.val!;
-      }
-    }
+  //   if (origin === "right") {
+  //     if (node?.val! <= lastMax) {
+  //       return false;
+  //     } else {
+  //       lastMax = node?.val!;
+  //     }
+  //   }
 
-    if (origin === null) {
-      lastMin = node?.val!;
-      lastMax = node?.val!;
-    }
+  //   if (origin === null) {
+  //     lastMin = node?.val!;
+  //     lastMax = node?.val!;
+  //   }
 
-    if (!node?.left || node?.right) return false;
+  //   if (!node?.left || node?.right) return false;
 
-    stack.push({
-      node: node?.right || null,
-      origin: "right",
-    });
+  //   stack.push({
+  //     node: node?.right || null,
+  //     origin: "right",
+  //   });
 
-    stack.push({
-      node: node?.left || null,
-      origin: "left",
-    });
-  }
+  //   stack.push({
+  //     node: node?.left || null,
+  //     origin: "left",
+  //   });
+  // }
 
   return true;
 }
