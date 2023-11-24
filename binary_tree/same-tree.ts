@@ -1,3 +1,6 @@
+/**
+ * Problem: https://leetcode.com/problems/same-tree/
+ */
 class TreeNode {
   val: number;
   left: TreeNode | null;
