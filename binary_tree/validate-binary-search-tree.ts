@@ -1,3 +1,6 @@
+/**
+ * Problem: https://leetcode.com/problems/validate-binary-search-tree/
+ */
 class TreeNode {
   val: number;
   left: TreeNode | null;
@@ -9,53 +12,25 @@ class TreeNode {
   }
 }
 
+function isValidBSTByMinMaxValue(
+  root: TreeNode | null,
+  minValue: number,
+  maxValue: number
+): boolean {
+  if (root === null) return true;
+
+  if (root.val <= minValue || root.val >= maxValue) return false;
+
+  return (
+    isValidBSTByMinMaxValue(root.left, minValue, root.val) &&
+    isValidBSTByMinMaxValue(root.right, root.val, maxValue)
+  );
+}
+
 function isValidBST(root: TreeNode | null): boolean {
-  const stack: Array<{
-    node: TreeNode | null;
-    origin: "left" | "right" | null;
-  }> = root ? [{ node: root, origin: null }] : [];
+  if (root === null) return true;
 
-  // let lastMin = 0; 
-  // let lastMax = 0;
-
-  // while (stack.length) {
-  //   const { node, origin } = stack.pop()!;
-
-  //   if (origin === "left") {
-  //     if (node?.val! >= lastMin) {
-  //       return false;
-  //     } else {
-  //       lastMin = node?.val!;
-  //     }
-  //   }
-
-  //   if (origin === "right") {
-  //     if (node?.val! <= lastMax) {
-  //       return false;
-  //     } else {
-  //       lastMax = node?.val!;
-  //     }
-  //   }
-
-  //   if (origin === null) {
-  //     lastMin = node?.val!;
-  //     lastMax = node?.val!;
-  //   }
-
-  //   if (!node?.left || node?.right) return false;
-
-  //   stack.push({
-  //     node: node?.right || null,
-  //     origin: "right",
-  //   });
-
-  //   stack.push({
-  //     node: node?.left || null,
-  //     origin: "left",
-  //   });
-  // }
-
-  return true;
+  return isValidBSTByMinMaxValue(root, Infinity * -1, Infinity);
 }
 
 const five = new TreeNode(5);
