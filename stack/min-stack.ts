@@ -12,11 +12,11 @@ class MinStack {
 
   push(val: number): void {
     this.min = Math.min(this.min, val);
-    this.stack.unshift(val);
+    this.stack.push(val);
   }
 
   pop(): void {
-    const min = this.stack.shift();
+    const min = this.stack.pop();
 
     if (min === this.min) {
       this.min = Infinity;
@@ -28,7 +28,7 @@ class MinStack {
   }
 
   top(): number {
-    return this.stack[0];
+    return this.stack[this.stack.length - 1];
   }
 
   getMin(): number {

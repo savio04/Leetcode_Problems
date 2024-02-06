@@ -15,8 +15,8 @@ function evalRPN(tokens: string[]): number {
     result = str;
 
     if (operations.has(str)) {
-      const num2 = Number(stack.shift());
-      const num1 = Number(stack.shift());
+      const num2 = Number(stack.pop());
+      const num1 = Number(stack.pop());
 
       const calc = operations.get(str)!;
       const resultCalc = calc(num1, num2);
@@ -24,7 +24,7 @@ function evalRPN(tokens: string[]): number {
       result = String(resultCalc);
     }
 
-    stack.unshift(result);
+    stack.push(result);
   }
 
   return Number(result);
