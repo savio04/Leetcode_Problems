@@ -1,41 +1,30 @@
 /**
  * Problem: https://leetcode.com/problems/search-in-rotated-sorted-array/
  */
+
 function search(nums: number[], target: number): number {
-  const minIndex = nums.indexOf(Math.min(...nums));
-  const indexes: number[] = [];
-
-  let items = 0;
-  let currentIndex = minIndex;
-
-  while (items != nums.length) {
-    if (currentIndex === nums.length) {
-      currentIndex = 0;
-      continue;
-    }
-
-    indexes.push(currentIndex);
-    currentIndex++;
-    items++;
-  }
-
   let left = 0;
-  let right = indexes.length - 1;
+  let rigth = nums.length - 1;
 
-  while (left <= right) {
-    const middle = Math.trunc((right + left) / 2);
-    const index = indexes[middle];
+  while (left <= rigth) {
+    const middle = Math.trunc((left + rigth) / 2);
 
-    if (nums[index] === target) return index;
+    if (nums[middle] === target) return middle;
 
-    if (nums[index] > target) {
-      right = middle - 1;
+    if (nums[left] <= nums[middle]) {
+      if (target < nums[left] || target > nums[middle]) {
+        left = middle + 1;
+      } else {
+        rigth = middle - 1;
+      }
     } else {
-      left = middle + 1;
+      if (target < nums[middle] || target > nums[rigth]) {
+        rigth = middle - 1;
+      } else {
+        left = middle + 1;
+      }
     }
   }
 
   return -1;
 }
-
-console.log(search([5,1,3], 5));
