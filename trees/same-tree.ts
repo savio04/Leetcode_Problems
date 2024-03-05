@@ -31,14 +31,13 @@ function isSameTree(p: TreeNode | null, q: TreeNode | null): boolean {
   return result;
 }
 
-const oneP = new TreeNode(1);
-const twoP = new TreeNode(2);
+/*Another solution*/
+function isSameTreeTwo(p: TreeNode | null, q: TreeNode | null): boolean {
+  if (p === null && q === null) return true;
 
-oneP.left = twoP;
+  if (p === null || q === null) return false;
 
-const oneQ = new TreeNode(1);
-const twoQ = new TreeNode(2);
+  if (p.val !== q.val) return false;
 
-oneQ.right = twoQ;
-
-console.log(isSameTree(oneP, oneQ));
+  return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+}
