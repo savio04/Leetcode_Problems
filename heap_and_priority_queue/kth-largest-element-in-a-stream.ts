@@ -1,14 +1,22 @@
+/*
+ * Problem: https://leetcode.com/problems/kth-largest-element-in-a-stream/description
+ * */
+
 class KthLargest {
   private k: number;
   private heap: number[];
-  private nums: number[];
 
   constructor(k: number, nums: number[]) {
     this.k = k;
-    this.nums = nums;
     this.heap = [...nums];
 
-    this.heapfy(0);
+    for (let i = Math.floor(this.heap.length / 2) - 1; i >= 0; i--) {
+      this.heapfy(i);
+    }
+
+    while (this.heap.length > this.k) {
+      this.remove();
+    }
   }
 
   heapfy(index: number) {
@@ -18,15 +26,15 @@ class KthLargest {
     let langest = index;
 
     if (
-      rightIndex < this.heap.length &&
-      this.heap[leftIndex] > this.heap[index]
+      leftIndex < this.heap.length &&
+      this.heap[leftIndex] < this.heap[langest]
     ) {
       langest = leftIndex;
     }
 
     if (
       rightIndex < this.heap.length &&
-      this.heap[rightIndex] > this.heap[index]
+      this.heap[rightIndex] < this.heap[langest]
     ) {
       langest = rightIndex;
     }
@@ -40,24 +48,23 @@ class KthLargest {
     }
   }
 
-  removeMax(): number {
-    const max = this.heap[0];
+  remove() {
     this.heap[0] = this.heap[this.heap.length - 1];
+    this.heap.pop();
 
-    this.heapfy(0);
-
-    return max;
+    for (let i = Math.floor(this.heap.length / 2) - 1; i >= 0; i--) {
+      this.heapfy(i);
+    }
   }
 
   add(val: number): number {
     let index = this.heap.length;
 
     this.heap.push(val);
-    this.nums.push(val);
 
     while (
       index > 0 &&
-      this.heap[Math.trunc((index - 1) / 2)] < this.heap[index]
+      this.heap[Math.trunc((index - 1) / 2)] > this.heap[index]
     ) {
       const tmp = this.heap[index];
       this.heap[index] = this.heap[Math.trunc((index - 1) / 2)];
@@ -66,14 +73,16 @@ class KthLargest {
       index = Math.trunc((index - 1) / 2);
     }
 
-    console.log("after", this.heap);
+    if (this.heap.length > this.k) {
+      this.remove();
+    }
 
-    let max = -Infinity;
-
-    // if(this.heap[this.k-1])
-
-    return this.heap[this.k - 1] > this.heap[this.k - 2]
-      ? this.heap[this.k - 2]
-      : this.heap[this.k - 1];
+    return this.heap[0];
   }
 }
+
+/**
+ * Your KthLargest object will be instantiated and called as such:
+ * var obj = new KthLargest(k, nums)
+ * var param_1 = obj.add(val)
+ */
